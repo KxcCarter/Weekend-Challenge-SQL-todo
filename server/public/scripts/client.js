@@ -4,7 +4,7 @@ function init() {
     console.log('js + jQ');
     //---------
     $('.js-add-new-task').on('submit', createNewTask);
-    $('#jsList').on('click', '.js-ctrl-status', changeStatus);
+    $('#jsList').on('click', '.js-ctrl-status', completeTask);
     $('#jsList').on('click', '.js-delete-task', deleteTask);
 
     // on load render todo-list
@@ -55,8 +55,30 @@ function getTasks() {
     });
 }
 
-function changeStatus() {
-    console.log($(this).parent().data('id'));
+function completeTask() {
+    console.log('in completeTask');
+    const id = $(this).parent().data('id');
+    let status = $(this).parent().data('completed');
+    console.log(status, id);
+
+    // this should toggle the status
+    changeStatus(id, !status);
+}
+
+function changeStatus(id, status) {
+    console.log('in changeStatus');
+
+    $.ajax({
+            type: 'PUT',
+            url: `/todo/${id}`,
+            data: { status: status },
+        })
+        .then((response) => {
+            getTasks();
+        })
+        .catch((err) => {
+            console.log('There has been an error!', err);
+        });
 }
 
 function deleteTask() {
@@ -75,9 +97,9 @@ function render(tasks) {
         }
 
         $('#jsList').append(`
-        <div class="card ${status} m-3 flex-column" 
+        <div class="card ${status} m-3 flex-column"
         style="max-width: 18rem;">
-            <div class="card-header" data-id="${task.id}">
+            <div class="card-header" data-id="${task.id}" data-completed="${task.completed}">
                 <button class="btn btn-sm btn-success js-ctrl-status">complete</button>
                 <button class="btn btn-sm btn-outline-danger js-delete-task">delete</button>
             </div>
