@@ -24,6 +24,7 @@ router.get('/', (req, res) => {
 // POST
 
 router.post('/', (req, res) => {
+    console.log('In POST route');
     const query = `INSERT INTO tasks (title, description)
                     VALUES ($1, $2);`;
 
