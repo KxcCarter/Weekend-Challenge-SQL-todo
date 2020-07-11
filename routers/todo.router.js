@@ -23,6 +23,22 @@ router.get('/', (req, res) => {
 
 // POST
 
+router.post('/', (req, res) => {
+    const query = `INSERT INTO tasks (title, description)
+                    VALUES ($1, $2);`;
+
+    pool
+        .query(query, [req.body.title, req.body.description])
+        .then((dbRes) => {
+            console.log(dbRes);
+            res.sendStatus(201);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+});
+
 // PUT
 
 // DELETE
