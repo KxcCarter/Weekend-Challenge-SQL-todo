@@ -4,6 +4,8 @@ function init() {
     console.log('js + jQ');
     //---------
     $('.js-add-new-task').on('submit', createNewTask);
+    $('#jsList').on('click', '.js-ctrl-status', changeStatus);
+    $('#jsList').on('click', '.js-delete-task', deleteTask);
 
     // on load render todo-list
     getTasks();
@@ -53,15 +55,24 @@ function getTasks() {
     });
 }
 
+function changeStatus() {
+    console.log($(this).parent().data('id'));
+}
+
+function deleteTask() {
+    console.log('In delete task.');
+}
+
 function render(tasks) {
     console.log(`in render`);
-    $('#js-list').empty();
+    $('#jsList').empty();
     for (let task of tasks) {
-        $('#js-list').append(`
+        $('#jsList').append(`
         <div class="card bg-light m-3 flex-column" 
-        style="max-width: 18rem;" data-id="${task.id}">
-            <div class="card-header">
-                <button class="btn btn-sm btn-primary">options</button>
+        style="max-width: 18rem;">
+            <div class="card-header" data-id="${task.id}">
+                <button class="btn btn-sm btn-success js-ctrl-status">complete</button>
+                <button class="btn btn-sm btn-outline-danger js-delete-task">delete</button>
             </div>
             <div class="card-body">
               <h5 class="card-title js-task-title">${task.title}</h5>
