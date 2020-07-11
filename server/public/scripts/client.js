@@ -154,7 +154,7 @@ function render(tasks) {
               <p class="card-text js-task-description">${task.description}</p>
             </div>
             <div class="card-footer text-muted small">
-    Created ${task.created}
+            <i class="far fa-clock"></i> ${task.created}
   </div>
         </div>
         `);
