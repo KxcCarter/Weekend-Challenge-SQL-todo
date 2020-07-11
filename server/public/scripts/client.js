@@ -146,7 +146,6 @@ function render(tasks) {
         style="width: 15rem;">
             <div class="card-header ${status} " data-id="${task.id}" data-completed="${task.completed}">
                 <button class="btn btn-sm btn-success js-ctrl-status">complete</button>
-                
                 <button class="btn btn-sm btn-outline-danger js-delete-task">delete</button>
             </div>
             <div class="card-body">
