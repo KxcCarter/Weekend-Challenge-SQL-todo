@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool');
+const moment = require('moment');
 
 // GET
 
@@ -13,8 +14,12 @@ router.get('/', (req, res) => {
     pool
         .query(query)
         .then((dbRes) => {
+            let tasks = dbRes.rows;
+            for (let task of tasks) {
+                task.created = moment(task.created).format('MMMM Do YYYY, h:mm:ss');
+            }
             console.log(`In dbRes`);
-            res.send(dbRes.rows);
+            res.send(tasks);
         })
         .catch((err) => {
             console.log(err);
@@ -26,11 +31,12 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     console.log('In POST route');
-    const query = `INSERT INTO tasks (title, description)
-                    VALUES ($1, $2);`;
+    const query = `INSERT INTO tasks (title, description, created)
+                    VALUES ($1, $2, $3);`;
+    let timeCreated = moment().format('YYYY-MM-DD h:mm:ss');
 
     pool
-        .query(query, [req.body.title, req.body.description])
+        .query(query, [req.body.title, req.body.description, timeCreated])
         .then((dbRes) => {
             console.log(dbRes);
             res.sendStatus(201);

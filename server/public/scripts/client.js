@@ -8,10 +8,8 @@ function init() {
     $('.js-add-new-task').on('submit', createNewTask);
     $('#jsList').on('click', '.js-ctrl-status', completeTask);
     $('#jsList').on('click', '.js-delete-task', deleteTask);
-    $('.js-set-sort').on('click', changeOrderBy)
-        // -------
-
-
+    $('.js-set-sort').on('click', changeOrderBy);
+    // -------
 
     // on load render todo-list
     getTasks();
@@ -111,12 +109,7 @@ function deleteTask() {
         cancelButtonText: `No, I'm still working on it.`,
     }).then((result) => {
         if (result.value) {
-            Swal.fire(
-                removeFromTable(id),
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-            );
+            Swal.fire(removeFromTable(id), 'Deleted!', 'Your file has been deleted.', 'success');
         }
     });
 }
@@ -160,6 +153,9 @@ function render(tasks) {
               <h5 class="card-title js-task-title">${task.title} ${checkmark}</h5>
               <p class="card-text js-task-description">${task.description}</p>
             </div>
+            <div class="card-footer text-muted small">
+    Created ${task.created}
+  </div>
         </div>
         `);
     }
