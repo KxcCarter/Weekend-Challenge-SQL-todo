@@ -12,12 +12,13 @@
 </head>
 
 <body>
-    <header class="jumbotron">
-        <h1>hello world</h1>
+    <header class="jumbotron text-center">
+        <h1>Todo-List</h1>
+        <p><em>So much to do, so little time!</em></p>
     </header>
 
     <main class="container">
-        <div class="d-flex flex-row">
+        <div class="row">
             <div class="col-sm-12 col-md-3">
                 <form class="bg-light">
                     <h3 class="pt-3 text-center">Add item to list</h3>
@@ -30,11 +31,15 @@
                         <label for="js-input-description">Description</label>
                         <textarea class="form-control" name="" id="js-input-description" cols="30" rows="10" placeholder="Description"></textarea>
                     </div>
-                    <button class="btn btn-outline-primary">add task</button>
+                    <div class="form-group m-3 pb-3">
+                        <button class="btn btn-outline-primary form-control">
+                add task
+              </button>
+                    </div>
                 </form>
             </div>
 
-            <div class="col-sm-12 col-md-9" id="js-list">
+            <div class="col-sm-12 col-md-9 d-flex flex-row flex-wrap" id="js-list">
                 <!-- render todo-list here -->
 
                 <div class="card bg-light mb-3" style="max-width: 18rem;">
