@@ -41,6 +41,24 @@ router.post('/', (req, res) => {
 
 // PUT
 
+router.put('/:id', (req, res) => {
+    console.log('In PUT route');
+    const query = `UPDATE tasks SET completed = $1 WHERE id = $2;`;
+    const id = req.params.id;
+
+    // req.body will be passed a boolean
+
+    pool
+        .query(query, [req.body.status, id])
+        .then((dbRes) => {
+            res.sendStatus(200);
+        })
+        .catch((err) => {
+            console.log('Error!', err);
+            res.sendStatus(500);
+        });
+});
+
 // DELETE
 
 module.exports = router;
