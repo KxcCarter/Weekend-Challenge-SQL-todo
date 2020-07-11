@@ -61,4 +61,20 @@ router.put('/:id', (req, res) => {
 
 // DELETE
 
+router.delete('/:id', (req, res) => {
+    console.log('In DELETE route');
+    const query = `DELETE FROM tasks WHERE id = $1;`;
+    const id = req.params.id;
+
+    pool
+        .query(query, [id])
+        .then((dbRes) => {
+            res.sendStatus(200);
+        })
+        .catch((err) => {
+            console.log('There was an error!', err);
+            res.sendStatus(500);
+        });
+});
+
 module.exports = router;
