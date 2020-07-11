@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const todoRouter = require('../routers/todo.router');
 const pool = require('../modules/pool');
 
 const app = express();
@@ -15,7 +16,7 @@ app.use(express.static('server/public'));
 // ROUTES
 // ------
 
-//app.use('/A_ROUTE', A_ROUTE);
+app.use('/todo', todoRouter);
 
 app.listen(PORT, () => {
     console.log('Server runing on port', PORT);
