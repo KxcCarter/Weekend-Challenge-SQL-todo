@@ -35,7 +35,7 @@ function postNewTask(newTask) {
             getTasks();
         })
         .catch((err) => {
-            console.log(err);
+            console.log('POST error!', err);
         });
 }
 
@@ -47,19 +47,21 @@ function getTasks() {
     // GETs data from database
 
     $.ajax({
-        type: 'GET',
-        url: '/todo',
-    }).then((response) => {
-        console.log(response);
-        render(response);
-    });
+            type: 'GET',
+            url: '/todo',
+        })
+        .then((response) => {
+            render(response);
+        })
+        .catch((err) => {
+            console.log('GET error!', err);
+        });
 }
 
 function completeTask() {
     console.log('in completeTask');
     const id = $(this).parent().data('id');
     let status = $(this).parent().data('completed');
-    console.log(status, id);
 
     // this should toggle the status
     changeStatus(id, !status);
@@ -77,12 +79,29 @@ function changeStatus(id, status) {
             getTasks();
         })
         .catch((err) => {
-            console.log('There has been an error!', err);
+            console.log('PUT error!', err);
         });
 }
 
 function deleteTask() {
     console.log('In delete task.');
+    const id = $(this).parent().data('id');
+
+    removeFromTable(id);
+}
+
+function removeFromTable(id) {
+    $.ajax({
+            type: 'DELETE',
+            url: `/todo/${id}`,
+        })
+        .then((response) => {
+            console.log('Task deleted from database');
+            getTasks();
+        })
+        .catch((err) => {
+            console.log('DELETE error!', err);
+        });
 }
 
 function render(tasks) {
