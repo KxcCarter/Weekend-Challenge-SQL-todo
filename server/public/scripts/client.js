@@ -1,13 +1,26 @@
 $(document).ready(init);
 
+let orderBy = 'id';
+
 function init() {
     console.log('js + jQ');
     //---------
     $('.js-add-new-task').on('submit', createNewTask);
     $('#jsList').on('click', '.js-ctrl-status', completeTask);
     $('#jsList').on('click', '.js-delete-task', deleteTask);
+    $('.js-set-sort').on('click', changeOrderBy)
+        // -------
+
+
 
     // on load render todo-list
+    getTasks();
+}
+
+function changeOrderBy() {
+    console.log('in changeOrderBy');
+    orderBy = $(this).data('sort');
+
     getTasks();
 }
 
@@ -48,7 +61,7 @@ function getTasks() {
 
     $.ajax({
             type: 'GET',
-            url: '/todo',
+            url: `/todo/?q=${orderBy}`,
         })
         .then((response) => {
             render(response);
