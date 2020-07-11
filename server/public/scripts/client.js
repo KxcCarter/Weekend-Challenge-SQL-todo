@@ -127,21 +127,24 @@ function render(tasks) {
     $('#jsList').empty();
     for (let task of tasks) {
         let status = null;
+        let checkmark = '';
         if (task.completed === true) {
             status = 'bg-info';
+            checkmark = '<i class="fas fa-check text-success"></i>';
         } else {
             status = 'bg-light';
         }
 
         $('#jsList').append(`
-        <div class="card ${status} m-3 flex-column"
+        <div class="card  m-3 flex-column"
         style="width: 15rem;">
-            <div class="card-header" data-id="${task.id}" data-completed="${task.completed}">
+            <div class="card-header ${status} " data-id="${task.id}" data-completed="${task.completed}">
                 <button class="btn btn-sm btn-success js-ctrl-status">complete</button>
+                
                 <button class="btn btn-sm btn-outline-danger js-delete-task">delete</button>
             </div>
             <div class="card-body">
-              <h5 class="card-title js-task-title">${task.title}</h5>
+              <h5 class="card-title js-task-title">${task.title} ${checkmark}</h5>
               <p class="card-text js-task-description">${task.description}</p>
             </div>
         </div>
