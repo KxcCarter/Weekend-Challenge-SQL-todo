@@ -87,7 +87,25 @@ function deleteTask() {
     console.log('In delete task.');
     const id = $(this).parent().data('id');
 
-    removeFromTable(id);
+    Swal.fire({
+        title: 'Are you sure you want to delete this task?',
+        text: "You won't be able to undo this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: `No, I'm still working on it.`,
+    }).then((result) => {
+        if (result.value) {
+            Swal.fire(
+                removeFromTable(id),
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+            );
+        }
+    });
 }
 
 function removeFromTable(id) {
