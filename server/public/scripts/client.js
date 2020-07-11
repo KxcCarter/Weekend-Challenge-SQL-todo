@@ -67,8 +67,15 @@ function render(tasks) {
     console.log(`in render`);
     $('#jsList').empty();
     for (let task of tasks) {
+        let status = null;
+        if (task.completed === true) {
+            status = 'bg-info';
+        } else {
+            status = 'bg-light';
+        }
+
         $('#jsList').append(`
-        <div class="card bg-light m-3 flex-column" 
+        <div class="card ${status} m-3 flex-column" 
         style="max-width: 18rem;">
             <div class="card-header" data-id="${task.id}">
                 <button class="btn btn-sm btn-success js-ctrl-status">complete</button>
