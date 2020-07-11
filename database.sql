@@ -1,6 +1,7 @@
 CREATE TABLE "tasks" 
 ("id" SERIAL PRIMARY KEY, "title" VARCHAR(80), 
-"completed" BOOLEAN DEFAULT false, "description" VARCHAR(240));
+"completed" BOOLEAN DEFAULT false, 
+"description" VARCHAR(240), "created" TIMESTAMP);
 
 INSERT INTO "tasks" ("title", "description")
 VALUES ('Learn to Code', 'Sit in front of the computer and google for hours and hours and hours.'), 

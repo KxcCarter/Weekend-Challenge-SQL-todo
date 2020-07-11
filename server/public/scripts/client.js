@@ -1,13 +1,24 @@
 $(document).ready(init);
 
+let orderBy = 'id';
+
 function init() {
     console.log('js + jQ');
     //---------
     $('.js-add-new-task').on('submit', createNewTask);
     $('#jsList').on('click', '.js-ctrl-status', completeTask);
     $('#jsList').on('click', '.js-delete-task', deleteTask);
+    $('.js-set-sort').on('click', changeOrderBy);
+    // -------
 
     // on load render todo-list
+    getTasks();
+}
+
+function changeOrderBy() {
+    console.log('in changeOrderBy');
+    orderBy = $(this).data('sort');
+
     getTasks();
 }
 
@@ -48,7 +59,7 @@ function getTasks() {
 
     $.ajax({
             type: 'GET',
-            url: '/todo',
+            url: `/todo/?q=${orderBy}`,
         })
         .then((response) => {
             render(response);
@@ -87,7 +98,20 @@ function deleteTask() {
     console.log('In delete task.');
     const id = $(this).parent().data('id');
 
-    removeFromTable(id);
+    Swal.fire({
+        title: 'Are you sure you want to delete this task?',
+        text: "You won't be able to undo this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: `No, I'm still working on it.`,
+    }).then((result) => {
+        if (result.value) {
+            Swal.fire(removeFromTable(id), 'Deleted!', 'Your file has been deleted.', 'success');
+        }
+    });
 }
 
 function removeFromTable(id) {
@@ -109,23 +133,28 @@ function render(tasks) {
     $('#jsList').empty();
     for (let task of tasks) {
         let status = null;
+        let checkmark = '';
         if (task.completed === true) {
             status = 'bg-info';
+            checkmark = '<i class="fas fa-check text-success"></i>';
         } else {
             status = 'bg-light';
         }
 
         $('#jsList').append(`
-        <div class="card ${status} m-3 flex-column"
+        <div class="card  m-3 flex-column"
         style="width: 15rem;">
-            <div class="card-header" data-id="${task.id}" data-completed="${task.completed}">
+            <div class="card-header ${status} " data-id="${task.id}" data-completed="${task.completed}">
                 <button class="btn btn-sm btn-success js-ctrl-status">complete</button>
                 <button class="btn btn-sm btn-outline-danger js-delete-task">delete</button>
             </div>
             <div class="card-body">
-              <h5 class="card-title js-task-title">${task.title}</h5>
+              <h5 class="card-title js-task-title">${task.title} ${checkmark}</h5>
               <p class="card-text js-task-description">${task.description}</p>
             </div>
+            <div class="card-footer text-muted small">
+            <i class="far fa-clock"></i> ${task.created}
+  </div>
         </div>
         `);
     }
