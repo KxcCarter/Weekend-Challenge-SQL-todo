@@ -9,6 +9,8 @@ function init() {
     $('#jsList').on('click', '.js-ctrl-status', completeTask);
     $('#jsList').on('click', '.js-delete-task', deleteTask);
     $('.js-set-sort').on('click', changeOrderBy);
+
+    $('#jsHistory').on('click', '.js-done', completeTask);
     // -------
 
     // on load render todo-list
@@ -135,6 +137,7 @@ function render(tasks) {
         let status = null;
         let checkmark = '';
         if (task.completed === true) {
+            continue;
             status = 'bg-info';
             checkmark = '<i class="fas fa-check text-success"></i>';
         } else {
@@ -158,4 +161,15 @@ function render(tasks) {
         </div>
         `);
     }
+
+    $('#jsHistory').empty();
+    for (let task of tasks) {
+        if (task.completed === true) {
+            $('#jsHistory').append(`
+            <li class="text-info " data-id="${task.id}" data-completed="${task.completed}"><h5 class="js-done">${task.title}</h5></li>
+            `);
+        }
+    }
 }
+
+function renderHistory(tasks) {}
