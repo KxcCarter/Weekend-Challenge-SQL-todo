@@ -8,7 +8,8 @@ Your project description goes here. What problem did you solve? How did you solv
 
 Additional README details can be found [here](https://github.com/PrimeAcademy/readme-template/blob/master/README.md).
 
-TODO:
-1: Create a style for the front end.
-2: Create RESTful api in back end and test with Postman.
-3: Create ajax routes in server.js
+## Features
+
+This branch adds a feature to store the headlines of completed tasks in a small box on the lower left-hand side of the screen. Whenever a title is clicked, it is "un-completed" and moved back to the main display.
+
+I'm not particularly enthusiastic about this feature, so I doubt I will be merging it back into the master branch.
